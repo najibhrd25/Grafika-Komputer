@@ -1,139 +1,99 @@
-# Mini 3D Scene dengan Three.js — Progress Praktikum Pertemuan 6
+# Laporan Progress Praktikum 6 — Introduction to Three.js
 
+**Mata Kuliah:** EF234504 — Grafika Komputer  
+**Pertemuan:** 6 — Introduction to Three.js  
 **Nama Mahasiswa:** Mohammad Najib Bahrudin  
 **NRP:** 5025241230  
-**Mata Kuliah:** EF234504 — Grafika Komputer  
-**Judul Praktikum:** Pertemuan 6 — Introduction to Three.js (Mini 3D Scene)  
 **Dosen Pengampu:** Dr. Darlis Herumurti  
 **Departemen:** Teknik Informatika — Institut Teknologi Sepuluh Nopember  
 
 ---
 
-## 1. Deskripsi Scene
-Aplikasi ini merupakan implementasi progres praktikum **Mini 3D Scene** berbasis **Three.js** yang dibangun menggunakan **Node.js + Vite**. Proyek ini menerapkan seluruh tahapan dari **Milestone 1 hingga Milestone 10**:
-- Abstraksi WebGL melalui Three.js `Scene`, `PerspectiveCamera`, dan `WebGLRenderer`.
-- Geometri dasar 3D di ruang spasial: Kubus (`BoxGeometry`), Bola (`SphereGeometry`), dan Lantai (`PlaneGeometry`).
-- Sistem pencahayaan dinamis (`AmbientLight` dan `DirectionalLight`).
-- Proyeksi bayangan realistis (*Shadow Mapping*) menggunakan `PCFSoftShadowMap`.
-- Animasi kontinu berbasis **Delta Time** (`THREE.Clock`) agar pergerakan objek stabil di segala *frame rate*.
-- Penanganan resolusi responsif terhadap perubahan ukuran layar browser (*responsive rendering*).
+## 1. Status & Deskripsi Progress
+Branch `progress` ini merepresentasikan **progres pengerjaan inti sesi praktikum di laboratorium** yang mencakup penyelesaian berurutan dari **Milestone 1 hingga Milestone 10**.
+
+Fokus utama pada tahap progres ini adalah memahami abstraksi dasar Three.js di atas WebGL tanpa menambahkan fitur tantangan (*challenge*) mandiri:
+* Mengelola scene 3D dengan **2 bentuk geometri utama** (*Cube* dan *Sphere*) yang berdiri di atas bidang lantai (*Ground Plane*).
+* Mempelajari perbedaan respons material (*Lambert Diffuse* vs *Phong Specular*).
+* Menerapkan sistem pencahayaan ganda (*AmbientLight* dan *DirectionalLight*) serta rantai konfigurasi *Shadow Mapping*.
+* Mengimplementasikan *animation loop* berbasis *Delta Time* (`THREE.Clock`) agar pergerakan objek independen terhadap *refresh rate* layar.
 
 ---
 
-## 2. Daftar Geometry
+## 2. Screenshot Tampilan Progress
 
-| No. | Objek | Geometry | Dimensi / Segmen | Keterangan |
-|:---:|:---|:---|:---|:---|
-| 1 | **Cube** | `THREE.BoxGeometry` | $1 \times 1 \times 1$ (diskalakan $1.2, 0.8, 1.2$) | Objek kubus utama dengan transformasi |
-| 2 | **Sphere** | `THREE.SphereGeometry` | radius: $0.7$, segmen: $32 \times 16$ | Objek bola dengan kalkulasi pantulan cahaya |
-| 3 | **Ground** | `THREE.PlaneGeometry` | $10 \times 10$ (rotasi $X = -90^\circ$) | Bidang datar penerima bayangan |
+Berikut adalah bukti tangkapan layar tampilan scene progres saat ini:
+
+![Progress Scene Milestone 1-10](./screenshot.png)
 
 ---
 
-## 3. Daftar Material
+## 3. Poin-Poin Milestone yang Telah Diselesaikan
 
-1. **`MeshLambertMaterial` (Warna Cyan `#22d3ee` pada Cube):**
-   * Menghasilkan pantulan difus (*diffuse reflection*) berdasarkan sudut jatuh cahaya (hukum Lambert). Tidak memiliki kilap (*matte*).
-2. **`MeshPhongMaterial` (Warna Biru `#4488ff` pada Sphere):**
-   * Menggunakan model shading Blinn-Phong dengan parameter `shininess: 60`, menghasilkan titik kilap (*specular highlight*) yang mengkilap saat terkena cahaya langsung.
-3. **`MeshLambertMaterial` (Warna Slate `#334155` pada Ground):**
-   * Material difus untuk permukaan lantai penangkap bayangan.
-
----
-
-## 4. Daftar Light (Pencahayaan)
-
-1. **`THREE.AmbientLight`:**
-   * Warna: Putih (`0xffffff`), Intensitas: $0.35$.
-   * Menerangi seluruh scene dari segala arah tanpa arah spesifik, mencegah bagian objek yang tidak terkena sinar langsung menjadi gelap gulita.
-2. **`THREE.DirectionalLight`:**
-   * Warna: Putih (`0xffffff`), Intensitas: $2.0$, Posisi: $(3, 5, 2)$.
-   * Bertindak sebagai sumber cahaya utama sejajar (*parallel rays*) seperti matahari yang memproyeksikan bayangan objek ke lantai.
+| No. | Milestone | Deskripsi Implementasi |
+|:---:|:---|:---|
+| 1 | **Milestone 1 — Setup Project** | Inisialisasi project berbasis Node.js + Vite dengan instalasi dependency `three`. Struktur project dan baseline HTML/CSS terhubung bersih tanpa error console. |
+| 2 | **Milestone 2 — Scene, Camera & Renderer** | Pembuatan `THREE.Scene()` dengan warna background `#0b1020`, inisialisasi `PerspectiveCamera` (FOV: $60^\circ$, near: $0.1$, far: $100$) dengan `lookAt(0, 0.5, 0)`, serta penyiapan `WebGLRenderer` dengan `antialias: true`. |
+| 3 | **Milestone 3 — Objek 1: Cube** | Penambahan geometri kubus menggunakan `THREE.BoxGeometry(1, 1, 1)` dengan `MeshLambertMaterial` berwarna cyan `#22d3ee`. |
+| 4 | **Milestone 4 — Transformasi Objek** | Menerapkan translasi posisi `(-1.2, 0.6, 0)`, rotasi sumbu Y `Math.PI / 4`, dan skala non-uniform `(1.2, 0.8, 1.2)` pada kubus. |
+| 5 | **Milestone 5 — Objek 2: Sphere** | Penambahan geometri bola menggunakan `THREE.SphereGeometry(0.7, 32, 16)` dengan `MeshPhongMaterial` (warna biru `#4488ff`, `shininess: 60`) untuk mengamati titik kilau pantulan (*specular highlight*). |
+| 6 | **Milestone 6 — Ground Plane** | Penambahan lantai menggunakan `THREE.PlaneGeometry(10, 10)` yang dirotasi horizontal $-90^\circ$ pada sumbu X dengan `MeshLambertMaterial` abu-abu gelap `#334155`. |
+| 7 | **Milestone 7 — Pencahayaan (Lighting)** | Penambahan `AmbientLight` (intensitas $0.35$) untuk penerangan dasar dan `DirectionalLight` (intensitas $2.0$) pada posisi $(3, 5, 2)$ sebagai sumber cahaya terarah utama. |
+| 8 | **Milestone 8 — Shadow Mapping** | Mengaktifkan `renderer.shadowMap.enabled = true`, mengonfigurasi `directionalLight.castShadow = true` (resolusi $1024 \times 1024$), mengaktifkan `castShadow` pada kubus dan bola, serta `receiveShadow` pada ground. |
+| 9 | **Milestone 9 — Animation Loop & Delta Time** | Pembuatan loop `requestAnimationFrame` dengan `THREE.Clock`: kubus berputar kontinu (`0.8 * delta`), bola berputar (`0.5 * delta`), dan bola bergerak melayang vertikal secara sinusoidal ($y = 0.75 + \sin(2.0 \cdot t) \times 0.15$). |
+| 10 | **Milestone 10 — Responsive Rendering** | Event listener `resize` yang secara dinamis memperbarui `camera.aspect`, memanggil `camera.updateProjectionMatrix()`, dan menyesuaikan `renderer.setSize()` tanpa distorsi. |
 
 ---
 
-## 5. Konfigurasi Shadow (Bayangan)
+## 4. Poin-Poin Backlog / Tugas Lanjutan (Belum Dikerjakan di Branch Ini)
 
-Rantai konfigurasi bayangan yang diaktifkan:
-1. **Renderer:**
-   * `renderer.shadowMap.enabled = true;`
-2. **Light:**
-   * `directionalLight.castShadow = true;`
-   * Resolusi shadow map: `1024 x 1024` piksel.
-   * Batas volume kamera bayangan ortografis: `left: -5`, `right: 5`, `top: 5`, `bottom: -5`, `near: 0.5`, `far: 20`.
-3. **Caster (Penghasil Bayangan):**
-   * `cube.castShadow = true;`
-   * `sphere.castShadow = true;`
-4. **Receiver (Penerima Bayangan):**
-   * `ground.receiveShadow = true;`
+Fitur-fitur berikut merupakan bagian dari tugas akhir mandiri dan tantangan (*Challenge* Poin 82–90):
+- [ ] **Challenge A (Tambah Geometri):** Belum menambahkan `CylinderGeometry`, `ConeGeometry`, atau `TorusGeometry`.
+- [ ] **Challenge B (Material Gallery):** Belum menjajarkan perbandingan material `MeshBasicMaterial` dan `MeshStandardMaterial` PBR.
+- [ ] **Challenge C (Dual Camera Mode):** Belum mengintegrasikan toggle tombol `P` untuk beralih ke `OrthographicCamera`.
+- [ ] **Challenge D (Animasi Lampu):** Belum menggerakkan posisi `DirectionalLight` secara memutar/orbit.
+- [ ] **Challenge H (Kontrol Objek Interaktif):** Belum mengaktifkan input keyboard panah dan `Q`/`E` untuk memindahkan kubus secara manual.
+- [ ] **Dashboard HUD Telemetri:** Tampilan HUD saat ini masih berupa badge status progres lab sederhana di pojok kiri atas.
+
+*(Catatan: Seluruh tantangan dan backlog di atas telah diimplementasikan secara terpisah pada branch `main`)*.
 
 ---
 
-## 6. Animasi yang Dibuat
+## 5. Cara Menjalankan
 
-1. **Rotasi Kubus:** Kubus berputar secara kontinu pada sumbu Y dengan kecepatan `0.8 * delta` radian/detik.
-2. **Rotasi Bola:** Bola berputar pada sumbu Y dengan kecepatan `0.5 * delta` radian/detik.
-3. **Hovering Sinusoidal Bola:** Bola bergerak melayang naik-turun secara harmonik:
-   $$y = 0.75 + \sin(2.0 \cdot t) \times 0.15$$
-4. **Frame-Rate Independent:** Animasi menggunakan `THREE.Clock` dengan pembatasan `delta = Math.min(clock.getDelta(), 0.05)` agar stabil dan tidak melompat ketika jendela diminimalkan.
-
----
-
-## 7. Challenge yang Dikerjakan
-
-Pada tahap progress ini telah disiapkan fondasi untuk:
-- Eksperimen material non-lit vs lighting material (Lambert vs Phong).
-- Penambahan HUD telemetri scene (`Objects count` dan koordinat posisi kamera).
-- *Fitur challenge lanjutan (dual camera, orbit lampu, kontrol interaktif, gallery material) tersedia secara lengkap pada branch `main`.*
-
----
-
-## 8. Kontrol Keyboard & Interaksi
-
-- **Mouse / Viewport:** Menampilkan tampilan statis perspektif 3D secara dinamis.
-- **Resize Jendela:** Otomatis memperbarui `camera.aspect`, `camera.updateProjectionMatrix()`, dan `renderer.setSize()`.
-
----
-
-## 9. Cara Menjalankan
-
-### Persyaratan:
-- Node.js (v18 ke atas)
-- npm / pnpm
-
-### Langkah:
 ```bash
-# 1. Masuk ke folder praktikum 6
+# Masuk ke folder praktikum 6
 cd "praktikum 6"
 
-# 2. Install dependency
+# Pastikan berada di branch progress
+git checkout progress
+
+# Install dependency
 npm install
-# atau
-pnpm install
 
-# 3. Jalankan server lokal
+# Jalankan development server
 npm run dev
-# atau
-pnpm dev
 ```
-Buka browser pada URL yang tertera di terminal: `http://localhost:5173/`.
+
+Buka URL lokal yang muncul pada terminal (biasanya `http://localhost:5173/`).
 
 ---
 
-## 10. Catatan Debugging
+## 6. Catatan Debugging
 
-1. **Orientasi Ground:** `PlaneGeometry` secara default menghadap ke sumbu Z positif (vertikal). Untuk menjadikannya lantai datar horizontal, geometri harus dirotasi $-90^\circ$ pada sumbu X: `groundGeometry.rotateX(-Math.PI / 2);`.
-2. **Rantai Shadow:** Bayangan tidak akan muncul jika salah satu dari empat syarat (`renderer.shadowMap.enabled`, `light.castShadow`, `mesh.castShadow`, `ground.receiveShadow`) tidak diaktifkan.
-3. **Distorsi Kamera saat Resize:** Jika aspect ratio diubah tanpa memanggil `camera.updateProjectionMatrix()`, objek akan tampak gepeng saat jendela browser diubah ukurannya.
+1. **Orientasi Ground:** Secara default `PlaneGeometry` menghadap ke sumbu Z. Harus dirotasi pada sumbu X sebesar $-90^\circ$ (`-Math.PI / 2`) agar menjadi lantai horizontal di bawah kubus dan bola.
+2. **Ketergantungan Shadow:** Bayangan hanya akan muncul di lantai jika seluruh rantai aktif:
+   $$\text{Renderer (shadowMap)} \to \text{Light (castShadow)} \to \text{Mesh (castShadow)} \to \text{Ground (receiveShadow)}$$
+3. **Penyelarasan Delta Time:** Nilai `clock.getDelta()` dibatasi dengan `Math.min(..., 0.05)` untuk mencegah lonjakan posisi ekstrem saat tab browser dibuka kembali setelah diminimalkan.
 
 ---
 
-## 11. Refleksi Praktikum
+## 7. Refleksi Praktikum
 
-1. Penggunaan Three.js memberikan lonjakan produktivitas yang sangat besar dibandingkan WebGL manual karena tidak perlu lagi menulis puluhan baris shader GLSL dan konfigurasi buffer VBO secara berulang.
-2. Abstraksi yang paling membantu adalah konsep `Mesh` yang menggabungkan `BufferGeometry` dan `Material`, serta penanganan `Scene Graph` yang mempermudah hierarki koordinat.
-3. Objek `BufferGeometry` di Three.js tetap mempertahankan data posisi titik vertex dan normal yang nantinya diteruskan ke GPU sebagai *Vertex Attribute*.
-4. `Material` seperti `MeshPhongMaterial` secara otomatis meng-compile fragment shader dengan rumus pencahayaan ambient, diffuse, dan specular Blinn-Phong tanpa perlu menulis rumus vektor manual.
-5. Konfigurasi shadow yang paling sering terlupa adalah mengaktifkan `renderer.shadowMap.enabled = true` dan memastikan ukuran batas `shadow.camera` mencakup seluruh posisi objek.
-6. Penerapan delta time (`clock.getDelta()`) terbukti krusial agar kecepatan rotasi dan pergerakan objek konsisten pada berbagai layar dengan refresh rate berbeda.
-7. Kendala debugging utama terletak pada penyesuaian posisi kamera dan pencahayaan agar bayangan jatuh tepat di atas lantai tanpa terpotong batas *frustum* shadow.
+1. **Perbedaan WebGL Manual vs Three.js:** Penggunaan Three.js secara dramatis mengurangi penulisan kode boilerplate yang rumit pada WebGL murni (seperti inisialisasi VAO/VBO dan kompilasi shader GLSL), memungkinkan fokus lebih cepat pada komposisi objek dan pencahayaan 3D.
+2. **Abstraksi Paling Membantu:** Konsep `Mesh = Geometry + Material` adalah abstraksi Three.js paling intuitif karena mengemas koordinat lokal, normal vektor, dan pipeline shading ke dalam satu objek yang mudah dikontrol transformasinya.
+3. **Hubungan Geometry dengan Vertex Data:** `BufferGeometry` Three.js sebenarnya memetakan langsung atribut data vertex (`position`, `normal`, `uv`) ke memori GPU dalam format `Float32Array`.
+4. **Hubungan Material dengan Shader/Lighting:** Material seperti `MeshPhongMaterial` secara otomatis meng-compile vertex dan fragment shader WebGL di belakang layar dengan rumus pencahayaan Ambient, Diffuse, dan Specular Blinn-Phong.
+5. **Konfigurasi Shadow yang Mudah Terlupa:** Mengaktifkan bayangan membutuhkan aktivasi simultan pada renderer, light, caster objek, dan receiver bidang; jika satu konfigurasi terlewat, bayangan tidak akan ter-render.
+6. **Manfaat Delta Time:** Delta time menjamin bahwa kecepatan perpindahan dan rotasi grafika sepenuhnya independen terhadap fluktuasi frame rate perangkat pengguna (stabil pada 30Hz, 60Hz, maupun 144Hz).
+7. **Masalah Debugging:** Mengatur batas volume frustum kamera bayangan (`directionalLight.shadow.camera`) sangat penting agar bayangan tidak terpotong saat objek bergerak di atas ground.
