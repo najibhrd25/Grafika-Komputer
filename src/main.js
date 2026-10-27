@@ -30,4 +30,10 @@ renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 app.appendChild(renderer.domElement);
 
+// Cube dengan MeshBasicMaterial
+const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
+const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x22d3ee });
+const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+scene.add(cube);
+
 renderer.render(scene, camera);
