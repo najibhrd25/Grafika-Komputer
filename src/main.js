@@ -96,3 +96,23 @@ function animate() {
 }
 
 animate();
+
+// Responsive Rendering
+window.addEventListener('resize', () => {
+  sizes.width = window.innerWidth;
+  sizes.height = window.innerHeight;
+
+  camera.aspect = sizes.width / sizes.height;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(sizes.width, sizes.height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+});
+
+// Update HUD sederhana
+const info = document.getElementById('info');
+function updateHUD() {
+  if (info) {
+    info.textContent = `Objects: ${scene.children.length} | Camera: ${camera.position.x.toFixed(1)}, ${camera.position.y.toFixed(1)}, ${camera.position.z.toFixed(1)}`;
+  }
+}
