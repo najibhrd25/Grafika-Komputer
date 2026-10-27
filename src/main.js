@@ -34,6 +34,11 @@ app.appendChild(renderer.domElement);
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
 const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x22d3ee });
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+// Transform Cube (position, rotation, scale)
+cube.position.set(-1.2, 0.6, 0);
+cube.rotation.y = Math.PI / 4;
+cube.scale.set(1.2, 0.8, 1.2);
+
 scene.add(cube);
 
 renderer.render(scene, camera);
