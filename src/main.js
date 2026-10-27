@@ -32,7 +32,7 @@ app.appendChild(renderer.domElement);
 
 // Cube dengan MeshBasicMaterial
 const cubeGeometry = new THREE.BoxGeometry(1, 1, 1);
-const cubeMaterial = new THREE.MeshBasicMaterial({ color: 0x22d3ee });
+const cubeMaterial = new THREE.MeshLambertMaterial({ color: 0x22d3ee });
 const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
 // Transform Cube (position, rotation, scale)
 cube.position.set(-1.2, 0.6, 0);
@@ -57,5 +57,13 @@ groundGeometry.rotateX(-Math.PI / 2);
 const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x334155 });
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 scene.add(ground);
+
+// Lighting: AmbientLight & DirectionalLight
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
+scene.add(ambientLight);
+
+const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
+directionalLight.position.set(3, 5, 2);
+scene.add(directionalLight);
 
 renderer.render(scene, camera);
