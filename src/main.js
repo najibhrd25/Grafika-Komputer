@@ -51,4 +51,11 @@ const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphere.position.set(1.4, 0.75, 0);
 scene.add(sphere);
 
+// Ground dengan PlaneGeometry horizontal
+const groundGeometry = new THREE.PlaneGeometry(10, 10);
+groundGeometry.rotateX(-Math.PI / 2);
+const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x334155 });
+const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+scene.add(ground);
+
 renderer.render(scene, camera);
