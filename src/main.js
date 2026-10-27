@@ -92,6 +92,7 @@ function animate() {
   sphere.rotation.y += 0.5 * delta;
   sphere.position.y = 0.75 + Math.sin(elapsed * 2.0) * 0.15;
 
+  updateHUD();
   renderer.render(scene, camera);
 }
 
