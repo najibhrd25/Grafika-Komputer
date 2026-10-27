@@ -26,6 +26,7 @@ scene.add(camera);
 
 // WebGLRenderer
 const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.shadowMap.enabled = true;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 app.appendChild(renderer.domElement);
@@ -39,6 +40,7 @@ cube.position.set(-1.2, 0.6, 0);
 cube.rotation.y = Math.PI / 4;
 cube.scale.set(1.2, 0.8, 1.2);
 
+cube.castShadow = true;
 scene.add(cube);
 
 // Sphere dengan MeshPhongMaterial (merespons lighting)
@@ -49,6 +51,7 @@ const sphereMaterial = new THREE.MeshPhongMaterial({
 });
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
 sphere.position.set(1.4, 0.75, 0);
+sphere.castShadow = true;
 scene.add(sphere);
 
 // Ground dengan PlaneGeometry horizontal
@@ -56,6 +59,7 @@ const groundGeometry = new THREE.PlaneGeometry(10, 10);
 groundGeometry.rotateX(-Math.PI / 2);
 const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x334155 });
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+ground.receiveShadow = true;
 scene.add(ground);
 
 // Lighting: AmbientLight & DirectionalLight
@@ -64,6 +68,14 @@ scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 2.0);
 directionalLight.position.set(3, 5, 2);
+directionalLight.castShadow = true;
+directionalLight.shadow.mapSize.set(1024, 1024);
+directionalLight.shadow.camera.left = -5;
+directionalLight.shadow.camera.right = 5;
+directionalLight.shadow.camera.top = 5;
+directionalLight.shadow.camera.bottom = -5;
+directionalLight.shadow.camera.near = 0.5;
+directionalLight.shadow.camera.far = 20;
 scene.add(directionalLight);
 
 renderer.render(scene, camera);
