@@ -41,4 +41,14 @@ cube.scale.set(1.2, 0.8, 1.2);
 
 scene.add(cube);
 
+// Sphere dengan MeshPhongMaterial (merespons lighting)
+const sphereGeometry = new THREE.SphereGeometry(0.7, 32, 16);
+const sphereMaterial = new THREE.MeshPhongMaterial({
+  color: 0x4488ff,
+  shininess: 60,
+});
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.position.set(1.4, 0.75, 0);
+scene.add(sphere);
+
 renderer.render(scene, camera);
