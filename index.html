@@ -3,15 +3,111 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Three.js Mini 3D Scene</title>
+  <title>Three.js Mini 3D Scene — Praktikum 6</title>
+  <link rel="stylesheet" href="/src/style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div id="app">
-    <div id="hud">
-      <strong>Three.js Mini 3D Scene</strong>
-      <span id="info">Loading...</span>
-    </div>
+    <!-- Main HUD Overlay -->
+    <header class="hud-header">
+      <div class="brand">
+        <div class="logo-dot"></div>
+        <div class="brand-text">
+          <h1>Three.js Mini 3D Scene</h1>
+          <p class="subtitle">Pertemuan 6 — Abstraction, Lighting & Shadows</p>
+        </div>
+      </div>
+      <div class="student-badge">
+        <span class="student-name">Mohammad Najib Bahrudin</span>
+        <span class="student-nrp">5025241230</span>
+      </div>
+    </header>
+
+    <!-- Stats & Info Panel -->
+    <aside id="hud" class="hud-panel">
+      <div class="panel-section-title">SCENE TELEMETRY</div>
+      
+      <div class="hud-row">
+        <span class="hud-label">FPS</span>
+        <span id="fpsStat" class="hud-val highlight-cyan">60 FPS</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">Camera</span>
+        <span id="cameraModeStat" class="hud-val badge-accent">Perspective (FOV: 60°)</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">Camera Pos</span>
+        <span id="cameraPosStat" class="hud-val font-mono">(4.0, 3.0, 6.0)</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">Meshes / Triangles</span>
+        <span id="sceneStats" class="hud-val font-mono">Loading...</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">Anim State</span>
+        <span id="animStateStat" class="hud-val status-running">RUNNING</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">Light Orbit</span>
+        <span id="lightOrbitStat" class="hud-val status-running">ACTIVE</span>
+      </div>
+      <div class="hud-row">
+        <span class="hud-label">Cube Position</span>
+        <span id="cubePosStat" class="hud-val font-mono">(-1.20, 0.60, 0.00)</span>
+      </div>
+    </aside>
+
+    <!-- Interactive Quick Controls Bar -->
+    <aside class="controls-guide hud-panel">
+      <div class="panel-section-title">INTERACTIVE CONTROLS</div>
+      <div class="keys-list">
+        <div class="key-item">
+          <span class="key-combo"><kbd>▲</kbd> <kbd>▼</kbd> <kbd>◀</kbd> <kbd>▶</kbd></span>
+          <span class="key-desc">Geser Posisi Kubus (Continuous Delta)</span>
+        </div>
+        <div class="key-item">
+          <span class="key-combo"><kbd>Q</kbd> / <kbd>E</kbd></span>
+          <span class="key-desc">Rotasi Kubus Kiri / Kanan</span>
+        </div>
+        <div class="key-item">
+          <span class="key-combo"><kbd>Space</kbd></span>
+          <span class="key-desc">Pause / Resume Animasi Objek</span>
+        </div>
+        <div class="key-item">
+          <span class="key-combo"><kbd>P</kbd></span>
+          <span class="key-desc">Toggle Perspective ↔ Orthographic</span>
+        </div>
+        <div class="key-item">
+          <span class="key-combo"><kbd>L</kbd></span>
+          <span class="key-desc">Toggle Orbit Directional Light</span>
+        </div>
+        <div class="key-item">
+          <span class="key-combo"><kbd>1</kbd> / <kbd>2</kbd> / <kbd>3</kbd></span>
+          <span class="key-desc">Preset Sudut Kamera (Overview / Close / Top)</span>
+        </div>
+      </div>
+      <div class="quick-buttons">
+        <button id="btnToggleAnim" class="hud-btn" type="button">⏸ Pause Anim</button>
+        <button id="btnToggleCam" class="hud-btn" type="button">📷 Toggle Cam (P)</button>
+        <button id="btnToggleLight" class="hud-btn" type="button">💡 Toggle Light (L)</button>
+        <button id="btnResetCube" class="hud-btn" type="button">🔄 Reset Kubus</button>
+      </div>
+    </aside>
+
+    <!-- Legend of Objects and Materials (Material Gallery) -->
+    <footer class="gallery-legend">
+      <div class="legend-chip"><span class="chip-dot" style="background:#22d3ee;"></span> <strong>Box:</strong> Lambert (Controllable)</div>
+      <div class="legend-chip"><span class="chip-dot" style="background:#3b82f6;"></span> <strong>Sphere:</strong> Phong (Specular & Floating)</div>
+      <div class="legend-chip"><span class="chip-dot" style="background:#f59e0b;"></span> <strong>Torus:</strong> Normal Material (Challenge A/B)</div>
+      <div class="legend-chip"><span class="chip-dot" style="background:#ec4899;"></span> <strong>Cone:</strong> Basic Material (Unlit)</div>
+      <div class="legend-chip"><span class="chip-dot" style="background:#10b981;"></span> <strong>Cylinder:</strong> Standard PBR</div>
+      <div class="legend-chip"><span class="chip-dot" style="background:#64748b;"></span> <strong>Ground:</strong> Lambert (Receive Shadow)</div>
+    </footer>
   </div>
+
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>
