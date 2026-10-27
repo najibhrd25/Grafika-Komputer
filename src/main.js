@@ -78,4 +78,21 @@ directionalLight.shadow.camera.near = 0.5;
 directionalLight.shadow.camera.far = 20;
 scene.add(directionalLight);
 
-renderer.render(scene, camera);
+// Animation loop dengan delta time
+const clock = new THREE.Clock();
+let elapsed = 0;
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  const delta = Math.min(clock.getDelta(), 0.05);
+  elapsed += delta;
+
+  cube.rotation.y += 0.8 * delta;
+  sphere.rotation.y += 0.5 * delta;
+  sphere.position.y = 0.75 + Math.sin(elapsed * 2.0) * 0.15;
+
+  renderer.render(scene, camera);
+}
+
+animate();
